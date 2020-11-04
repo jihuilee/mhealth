@@ -39,21 +39,12 @@ interval_aggregation = function(data, variable, ID, timestamp, format = "%Y-%m-%
   if(interval == 1) {tseq = tseq0; tlength = tlength0} else{
 
     timesep = interval * (1:round((tlength0 + 1)/interval)-1) + 1
-    timesep2 = c((timesep-1)[-1], tlength0)
-    timeint = data.frame(start = timesep, end = timesep2) # Interval: Start and end time
-    timeint2 = t(apply(timeint, 1, function(x){x[1]:x[2]})) # tlength x interval matrix
-
     tseq = tseq0[timesep] # Aggregated time stamp
     tlength = length(tseq)
   }
 
   # Time interval indicator
-  data$time2 = c()
-  for(t in 1:nrow(data))
-  {
-    data$time2[t] = tseq[apply(timeint2, 1, function(x){sum(x %in% which(grepl(data$time[t], tseq0)))}) == 1]
-  }
-
+  data$time2 = sapply(data$time, function(x){tseq[findInterval(x = x, vec = tseq)]})
   data$time2 = as_hms(data$time2)
 
   out = data.frame(data %>% group_by(!!as.name(ID), date, time2) %>% summarise(outvar = aggregatefun(!!as.name(variable))))

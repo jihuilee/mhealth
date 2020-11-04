@@ -4,7 +4,7 @@
 \alias{raw_plot}
 \title{Plot the aggregated data per individual}
 \usage{
-raw_plot(data, variable, ID, Date, Time)
+raw_plot(data, variable, ID, date, time)
 }
 \arguments{
 \item{data}{Data in a data.frame format (e.g. Output of function 'interval_aggregation')}
@@ -13,9 +13,9 @@ raw_plot(data, variable, ID, Date, Time)
 
 \item{ID}{Name of ID variable in the data set}
 
-\item{Date}{Name of date variable in the data set}
+\item{date}{Name of date variable in the data set}
 
-\item{Time}{Name of time variable in the data set}
+\item{time}{Name of time variable in the data set}
 }
 \description{
 Plot the aggregated data per individual
